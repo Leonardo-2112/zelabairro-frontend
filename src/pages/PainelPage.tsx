@@ -7,6 +7,7 @@ import { MensagemErro } from '../components/MensagemErro'
 import { MudarStatus } from '../components/MudarStatus'
 import { PrevisaoIa } from '../components/PrevisaoIa'
 import { PrioridadeBadge } from '../components/PrioridadeBadge'
+import { ResumoBairros } from '../components/ResumoBairros'
 import { StatusBadge } from '../components/StatusBadge'
 import { useAuth } from '../hooks/useAuth'
 import { useOcorrencias } from '../hooks/useOcorrencias'
@@ -34,6 +35,13 @@ export function PainelPage() {
         subtitulo={`Olá, ${usuario?.nome ?? 'gestor'}. Atenda primeiro o que tem mais pontos de prioridade.`}
       />
       <div className="container-pagina space-y-10 py-10">
+        <section aria-labelledby="titulo-bairros">
+          <h2 id="titulo-bairros" className="text-2xl font-bold">Resumo por bairro</h2>
+          <div className="mt-4">
+            <ResumoBairros />
+          </div>
+        </section>
+
         <section aria-labelledby="titulo-fila">
           <h2 id="titulo-fila" className="text-2xl font-bold">Fila por prioridade</h2>
           <div aria-live="polite">
