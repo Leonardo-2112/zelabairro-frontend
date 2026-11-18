@@ -4,6 +4,7 @@ import { ContatoPage } from './pages/ContatoPage'
 import { FaqPage } from './pages/FaqPage'
 import { HomePage } from './pages/HomePage'
 import { IntegrantesPage } from './pages/IntegrantesPage'
+import { LoginPage } from './pages/LoginPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { SobrePage } from './pages/SobrePage'
 
@@ -17,6 +18,7 @@ function App() {
         <Route path="integrantes" element={<IntegrantesPage />} />
         <Route path="faq" element={<FaqPage />} />
         <Route path="contato" element={<ContatoPage />} />
+        <Route path="login" element={<LoginPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
