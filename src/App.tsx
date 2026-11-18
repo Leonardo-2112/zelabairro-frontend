@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import { MainLayout } from './layouts/MainLayout'
+import { CadastroPage } from './pages/CadastroPage'
 import { ContatoPage } from './pages/ContatoPage'
 import { FaqPage } from './pages/FaqPage'
 import { HomePage } from './pages/HomePage'
@@ -19,6 +20,7 @@ function App() {
         <Route path="faq" element={<FaqPage />} />
         <Route path="contato" element={<ContatoPage />} />
         <Route path="login" element={<LoginPage />} />
+        <Route path="cadastro" element={<CadastroPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
