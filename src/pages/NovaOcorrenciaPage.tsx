@@ -7,6 +7,7 @@ import { CampoFormulario } from '../components/CampoFormulario'
 import { CampoTexto } from '../components/CampoTexto'
 import { Carregando } from '../components/Carregando'
 import { MensagemErro } from '../components/MensagemErro'
+import { SugestaoApoio } from '../components/SugestaoApoio'
 import { useAuth } from '../hooks/useAuth'
 import { useCatalogo } from '../hooks/useCatalogo'
 import { criarOcorrencia } from '../services/api'
@@ -38,6 +39,9 @@ export function NovaOcorrenciaPage() {
   } = useForm<FormOcorrencia>({ defaultValues: { idCategoria: '', idBairro: '', descricao: '', endereco: '' } })
 
   const tamanhoDescricao = watch('descricao').length
+  // watch "assiste" os selects para a sugestão de apoio (RN07) reagir na hora
+  const idCategoria = Number(watch('idCategoria'))
+  const idBairro = Number(watch('idBairro'))
 
   async function enviar(dados: FormOcorrencia) {
     if (!usuario) return
@@ -124,6 +128,8 @@ export function NovaOcorrenciaPage() {
                 </select>
               </CampoFormulario>
             </div>
+
+            <SugestaoApoio idCategoria={idCategoria} idBairro={idBairro} />
 
             <CampoFormulario
               id="descricao"
