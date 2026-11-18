@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CabecalhoPagina } from '../components/CabecalhoPagina'
+import { CadastroGestor } from '../components/CadastroGestor'
 import { Carregando } from '../components/Carregando'
 import { EstadoVazio } from '../components/EstadoVazio'
 import { MensagemErro } from '../components/MensagemErro'
@@ -85,6 +86,12 @@ export function PainelPage() {
               </ol>
             )}
           </div>
+        </section>
+
+        <section aria-labelledby="titulo-gestor">
+          <h2 id="titulo-gestor" className="text-2xl font-bold">Cadastrar gestor</h2>
+          <p className="mt-1 mb-4 text-slate-600">Só um gestor cadastra outro. Fica registrado quem fez o cadastro.</p>
+          <CadastroGestor />
         </section>
       </div>
     </>

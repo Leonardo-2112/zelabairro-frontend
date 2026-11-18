@@ -1,4 +1,4 @@
-import type { Bairro, Categoria } from '../types/catalogo'
+import type { Bairro, Categoria, Orgao } from '../types/catalogo'
 import type { CampoErro, ErroApi } from '../types/erroApi'
 import type { ResumoBairro } from '../types/painel'
 import type {
@@ -10,7 +10,7 @@ import type {
   NovaOcorrencia,
   Ocorrencia,
 } from '../types/ocorrencia'
-import type { Cidadao, DadosLogin, NovoCidadao, Sessao } from '../types/usuario'
+import type { Cidadao, DadosLogin, Gestor, NovoCidadao, NovoGestor, Sessao } from '../types/usuario'
 
 // Endereço da API Java, lido do arquivo .env (VITE_API_URL). Nunca fixo no código.
 export const API_URL: string = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '')
@@ -182,4 +182,18 @@ export function listarBairros(): Promise<Bairro[]> {
 // GET /painel/bairros -> abertas, atrasadas e resolvidas por bairro (só gestor)
 export function resumoPorBairro(idGestor: number): Promise<ResumoBairro[]> {
   return request<ResumoBairro[]>('/painel/bairros', { cabecalhos: { 'X-Gestor-Id': String(idGestor) } })
+}
+
+// GET /orgaos -> órgãos da prefeitura (para o cadastro de gestor)
+export function listarOrgaos(): Promise<Orgao[]> {
+  return request<Orgao[]>('/orgaos')
+}
+
+// POST /gestores -> só um gestor cadastra outro; a API registra quem cadastrou (RN17)
+export function cadastrarGestor(dados: NovoGestor, idGestor: number): Promise<Gestor> {
+  return request<Gestor>('/gestores', {
+    metodo: 'POST',
+    corpo: dados,
+    cabecalhos: { 'X-Gestor-Id': String(idGestor) },
+  })
 }
