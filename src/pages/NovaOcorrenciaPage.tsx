@@ -1,12 +1,11 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import { CheckCircle2 } from 'lucide-react'
 import { CabecalhoPagina } from '../components/CabecalhoPagina'
 import { CampoFormulario } from '../components/CampoFormulario'
 import { CampoFotos } from '../components/CampoFotos'
 import { CampoTexto } from '../components/CampoTexto'
 import { Carregando } from '../components/Carregando'
+import { ConfirmacaoOcorrencia } from '../components/ConfirmacaoOcorrencia'
 import { MensagemErro } from '../components/MensagemErro'
 import { SugestaoApoio } from '../components/SugestaoApoio'
 import { useAuth } from '../hooks/useAuth'
@@ -77,25 +76,11 @@ export function NovaOcorrenciaPage() {
     }
   }
 
-  // Depois do POST: confirmação com o número da ocorrência
+  // Depois do POST: confirmação com o número da ocorrência e a previsão da IA
   if (criada) {
     return (
       <section className="container-pagina py-12">
-        <div className="card mx-auto max-w-xl space-y-4 text-center" role="status">
-          <CheckCircle2 className="mx-auto h-12 w-12 text-green-700" aria-hidden="true" />
-          <h1 className="text-3xl font-bold">Ocorrência #{criada.id} registrada!</h1>
-          <p className="text-slate-700">
-            {criada.categoria.nome} em {criada.bairro.nome}. A prefeitura já pode ver o seu chamado.
-            {criada.qtdFotos > 0 && ` ${criada.qtdFotos === 1 ? '1 foto enviada.' : `${criada.qtdFotos} fotos enviadas.`}`}
-          </p>
-          {avisoFotos && <MensagemErro mensagem={avisoFotos} />}
-          <div className="flex flex-col justify-center gap-3 sm:flex-row">
-            <Link to={`/ocorrencias/${criada.id}`} className="btn-primario">Ver a ocorrência</Link>
-            <button type="button" className="btn-secundario" onClick={() => setCriada(null)}>
-              Registrar outra
-            </button>
-          </div>
-        </div>
+        <ConfirmacaoOcorrencia ocorrencia={criada} avisoFotos={avisoFotos} onRegistrarOutra={() => setCriada(null)} />
       </section>
     )
   }
