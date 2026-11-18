@@ -1,6 +1,14 @@
 import type { Bairro, Categoria } from '../types/catalogo'
 import type { CampoErro, ErroApi } from '../types/erroApi'
-import type { Apoio, Atualizacao, FiltrosOcorrencia, Foto, NovaOcorrencia, Ocorrencia } from '../types/ocorrencia'
+import type {
+  Apoio,
+  Atualizacao,
+  FiltrosOcorrencia,
+  Foto,
+  NovaAtualizacao,
+  NovaOcorrencia,
+  Ocorrencia,
+} from '../types/ocorrencia'
 import type { Cidadao, DadosLogin, NovoCidadao, Sessao } from '../types/usuario'
 
 // Endereço da API Java, lido do arquivo .env (VITE_API_URL). Nunca fixo no código.
@@ -119,6 +127,15 @@ export function criarOcorrencia(dados: NovaOcorrencia): Promise<Ocorrencia> {
 // GET /ocorrencias/{id}/atualizacoes -> histórico de status
 export function listarAtualizacoes(idOcorrencia: number): Promise<Atualizacao[]> {
   return request<Atualizacao[]>(`/ocorrencias/${idOcorrencia}/atualizacoes`)
+}
+
+// POST /ocorrencias/{id}/atualizacoes -> muda o status (só gestor: X-Gestor-Id, RN05/RN06/RN16)
+export function registrarAtualizacao(idOcorrencia: number, dados: NovaAtualizacao, idGestor: number): Promise<Atualizacao> {
+  return request<Atualizacao>(`/ocorrencias/${idOcorrencia}/atualizacoes`, {
+    metodo: 'POST',
+    corpo: dados,
+    cabecalhos: { 'X-Gestor-Id': String(idGestor) },
+  })
 }
 
 // GET /ocorrencias/{id}/fotos -> lista sem os bytes (cada item tem a url da imagem)
