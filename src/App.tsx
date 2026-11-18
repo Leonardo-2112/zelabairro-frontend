@@ -1,31 +1,39 @@
+import { lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { RotaProtegida } from './components/RotaProtegida'
 import { MainLayout } from './layouts/MainLayout'
-import { CadastroPage } from './pages/CadastroPage'
-import { ContatoPage } from './pages/ContatoPage'
-import { FaqPage } from './pages/FaqPage'
-import { HomePage } from './pages/HomePage'
-import { IntegrantesPage } from './pages/IntegrantesPage'
-import { LoginPage } from './pages/LoginPage'
-import { NotFoundPage } from './pages/NotFoundPage'
-import { NovaOcorrenciaPage } from './pages/NovaOcorrenciaPage'
-import { OcorrenciaDetalhePage } from './pages/OcorrenciaDetalhePage'
-import { OcorrenciasPage } from './pages/OcorrenciasPage'
-import { PainelPage } from './pages/PainelPage'
-import { SobrePage } from './pages/SobrePage'
+
+// lazy(): cada página vira um arquivo separado no build e só é baixada quando a rota abre
+const HomePage = lazy(() => import('./pages/HomePage').then((m) => ({ default: m.HomePage })))
+const SobrePage = lazy(() => import('./pages/SobrePage').then((m) => ({ default: m.SobrePage })))
+const IntegrantesPage = lazy(() => import('./pages/IntegrantesPage').then((m) => ({ default: m.IntegrantesPage })))
+const FaqPage = lazy(() => import('./pages/FaqPage').then((m) => ({ default: m.FaqPage })))
+const ContatoPage = lazy(() => import('./pages/ContatoPage').then((m) => ({ default: m.ContatoPage })))
+const LoginPage = lazy(() => import('./pages/LoginPage').then((m) => ({ default: m.LoginPage })))
+const CadastroPage = lazy(() => import('./pages/CadastroPage').then((m) => ({ default: m.CadastroPage })))
+const OcorrenciasPage = lazy(() => import('./pages/OcorrenciasPage').then((m) => ({ default: m.OcorrenciasPage })))
+const OcorrenciaDetalhePage = lazy(() =>
+  import('./pages/OcorrenciaDetalhePage').then((m) => ({ default: m.OcorrenciaDetalhePage })),
+)
+const NovaOcorrenciaPage = lazy(() => import('./pages/NovaOcorrenciaPage').then((m) => ({ default: m.NovaOcorrenciaPage })))
+const PainelPage = lazy(() => import('./pages/PainelPage').then((m) => ({ default: m.PainelPage })))
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage').then((m) => ({ default: m.NotFoundPage })))
 
 // Mapa de rotas: todas as páginas ficam dentro do layout (Header + Footer)
 function App() {
   return (
     <Routes>
       <Route element={<MainLayout />}>
+        {/* Institucionais */}
         <Route index element={<HomePage />} />
-        <Route path="ocorrencias" element={<OcorrenciasPage />} />
-        <Route path="ocorrencias/:id" element={<OcorrenciaDetalhePage />} />
         <Route path="sobre" element={<SobrePage />} />
         <Route path="integrantes" element={<IntegrantesPage />} />
         <Route path="faq" element={<FaqPage />} />
         <Route path="contato" element={<ContatoPage />} />
+
+        {/* Solução */}
+        <Route path="ocorrencias" element={<OcorrenciasPage />} />
+        <Route path="ocorrencias/:id" element={<OcorrenciaDetalhePage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="cadastro" element={<CadastroPage />} />
 
@@ -39,6 +47,7 @@ function App() {
           <Route path="painel" element={<PainelPage />} />
         </Route>
 
+        {/* Qualquer outro endereço */}
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
