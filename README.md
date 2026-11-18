@@ -14,7 +14,7 @@ Este repositório é a **SPA em React** que consome a **API REST em Java** do pr
 | O quê | Endereço |
 | --- | --- |
 | Repositório (GitHub) | https://github.com/Leonardo-2112/zelabairro-frontend |
-| Aplicação publicada (Vercel) | `[colar o link da Vercel]` |
+| Aplicação publicada (Vercel) | https://zelabairro-frontend.vercel.app |
 | API Java (Render) | https://zelabairro-api-08ut.onrender.com |
 | Vídeo no YouTube (até 3 min) | `[colar o link do vídeo]` |
 
