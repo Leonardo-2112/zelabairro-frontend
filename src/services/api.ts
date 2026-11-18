@@ -126,6 +126,17 @@ export function listarFotos(idOcorrencia: number): Promise<Foto[]> {
   return request<Foto[]>(`/ocorrencias/${idOcorrencia}/fotos`)
 }
 
+// POST /ocorrencias/{id}/fotos (multipart, campo "arquivo"). Só o autor envia: X-Cidadao-Id (RN18)
+export function enviarFoto(idOcorrencia: number, arquivo: File, idCidadao: number): Promise<Foto> {
+  const formulario = new FormData()
+  formulario.append('arquivo', arquivo)
+  return request<Foto>(`/ocorrencias/${idOcorrencia}/fotos`, {
+    metodo: 'POST',
+    corpo: formulario,
+    cabecalhos: { 'X-Cidadao-Id': String(idCidadao) },
+  })
+}
+
 // Endereço completo da imagem para usar no <img src>: VITE_API_URL + "/fotos/3"
 export function urlFoto(foto: Foto): string {
   return `${API_URL}${foto.url}`

@@ -4,13 +4,14 @@ import { useForm } from 'react-hook-form'
 import { CheckCircle2 } from 'lucide-react'
 import { CabecalhoPagina } from '../components/CabecalhoPagina'
 import { CampoFormulario } from '../components/CampoFormulario'
+import { CampoFotos } from '../components/CampoFotos'
 import { CampoTexto } from '../components/CampoTexto'
 import { Carregando } from '../components/Carregando'
 import { MensagemErro } from '../components/MensagemErro'
 import { SugestaoApoio } from '../components/SugestaoApoio'
 import { useAuth } from '../hooks/useAuth'
 import { useCatalogo } from '../hooks/useCatalogo'
-import { criarOcorrencia } from '../services/api'
+import { criarOcorrencia, enviarFoto } from '../services/api'
 import type { Ocorrencia } from '../types/ocorrencia'
 import { aplicarErrosDaApi } from '../utils/errosFormulario'
 
@@ -28,6 +29,8 @@ export function NovaOcorrenciaPage() {
   const { dados: catalogo, carregando, erro: erroCatalogo, recarregar } = useCatalogo()
   const [erroApi, setErroApi] = useState<string | null>(null)
   const [criada, setCriada] = useState<Ocorrencia | null>(null)
+  const [fotos, setFotos] = useState<File[]>([])
+  const [avisoFotos, setAvisoFotos] = useState<string | null>(null)
 
   const {
     register,
@@ -54,7 +57,20 @@ export function NovaOcorrenciaPage() {
         idCategoria: Number(dados.idCategoria),
         idBairro: Number(dados.idBairro),
       })
-      setCriada(ocorrencia)
+
+      // Com o id da ocorrência, envia cada foto (uma requisição por foto)
+      const falhas: string[] = []
+      for (const foto of fotos) {
+        try {
+          await enviarFoto(ocorrencia.id, foto, usuario.id)
+        } catch (erroFoto) {
+          falhas.push(`${foto.name}: ${erroFoto instanceof Error ? erroFoto.message : 'erro ao enviar'}`)
+        }
+      }
+      setAvisoFotos(falhas.length > 0 ? `Algumas fotos não foram enviadas. ${falhas.join(' ')}` : null)
+
+      setCriada({ ...ocorrencia, qtdFotos: fotos.length - falhas.length })
+      setFotos([])
       reset()
     } catch (erro) {
       setErroApi(aplicarErrosDaApi(erro, setError))
@@ -70,7 +86,9 @@ export function NovaOcorrenciaPage() {
           <h1 className="text-3xl font-bold">Ocorrência #{criada.id} registrada!</h1>
           <p className="text-slate-700">
             {criada.categoria.nome} em {criada.bairro.nome}. A prefeitura já pode ver o seu chamado.
+            {criada.qtdFotos > 0 && ` ${criada.qtdFotos === 1 ? '1 foto enviada.' : `${criada.qtdFotos} fotos enviadas.`}`}
           </p>
+          {avisoFotos && <MensagemErro mensagem={avisoFotos} />}
           <div className="flex flex-col justify-center gap-3 sm:flex-row">
             <Link to={`/ocorrencias/${criada.id}`} className="btn-primario">Ver a ocorrência</Link>
             <button type="button" className="btn-secundario" onClick={() => setCriada(null)}>
@@ -165,6 +183,8 @@ export function NovaOcorrenciaPage() {
                 maxLength: { value: 200, message: 'RN03: o endereço deve ter no máximo 200 caracteres.' },
               })}
             />
+
+            <CampoFotos fotos={fotos} onMudar={setFotos} />
 
             <button type="submit" className="btn-primario w-full sm:w-auto" disabled={isSubmitting}>
               {isSubmitting ? 'Registrando…' : 'Registrar ocorrência'}
