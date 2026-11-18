@@ -1,0 +1,17 @@
+# Dependências e build
+node_modules
+dist
+*.tsbuildinfo
+
+# Variáveis de ambiente (só o .env.example vai para o GitHub)
+.env
+.env.local
+.env.*.local
+
+# Zip da entrega e arquivos do sistema/editor
+*.zip
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.log
