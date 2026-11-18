@@ -7,6 +7,7 @@ import { HomePage } from './pages/HomePage'
 import { IntegrantesPage } from './pages/IntegrantesPage'
 import { LoginPage } from './pages/LoginPage'
 import { NotFoundPage } from './pages/NotFoundPage'
+import { OcorrenciaDetalhePage } from './pages/OcorrenciaDetalhePage'
 import { OcorrenciasPage } from './pages/OcorrenciasPage'
 import { SobrePage } from './pages/SobrePage'
 
@@ -17,6 +18,7 @@ function App() {
       <Route element={<MainLayout />}>
         <Route index element={<HomePage />} />
         <Route path="ocorrencias" element={<OcorrenciasPage />} />
+        <Route path="ocorrencias/:id" element={<OcorrenciaDetalhePage />} />
         <Route path="sobre" element={<SobrePage />} />
         <Route path="integrantes" element={<IntegrantesPage />} />
         <Route path="faq" element={<FaqPage />} />

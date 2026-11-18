@@ -106,6 +106,11 @@ export function listarOcorrencias(filtros: FiltrosOcorrencia = {}): Promise<Ocor
   return request<Ocorrencia[]>(`/ocorrencias${consulta ? `?${consulta}` : ''}`)
 }
 
+// GET /ocorrencias/{id}
+export function buscarOcorrencia(id: number): Promise<Ocorrencia> {
+  return request<Ocorrencia>(`/ocorrencias/${id}`)
+}
+
 // ---------- Categorias e bairros (para filtros e formulários) ----------
 
 // GET /categorias
