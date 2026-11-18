@@ -7,6 +7,7 @@ import { HomePage } from './pages/HomePage'
 import { IntegrantesPage } from './pages/IntegrantesPage'
 import { LoginPage } from './pages/LoginPage'
 import { NotFoundPage } from './pages/NotFoundPage'
+import { OcorrenciasPage } from './pages/OcorrenciasPage'
 import { SobrePage } from './pages/SobrePage'
 
 // Mapa de rotas: todas as páginas ficam dentro do layout (Header + Footer)
@@ -15,6 +16,7 @@ function App() {
     <Routes>
       <Route element={<MainLayout />}>
         <Route index element={<HomePage />} />
+        <Route path="ocorrencias" element={<OcorrenciasPage />} />
         <Route path="sobre" element={<SobrePage />} />
         <Route path="integrantes" element={<IntegrantesPage />} />
         <Route path="faq" element={<FaqPage />} />
