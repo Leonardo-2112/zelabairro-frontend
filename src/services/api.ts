@@ -1,6 +1,6 @@
 import type { Bairro, Categoria } from '../types/catalogo'
 import type { CampoErro, ErroApi } from '../types/erroApi'
-import type { FiltrosOcorrencia, Ocorrencia } from '../types/ocorrencia'
+import type { Atualizacao, FiltrosOcorrencia, Foto, Ocorrencia } from '../types/ocorrencia'
 import type { Cidadao, DadosLogin, NovoCidadao, Sessao } from '../types/usuario'
 
 // Endereço da API Java, lido do arquivo .env (VITE_API_URL). Nunca fixo no código.
@@ -109,6 +109,21 @@ export function listarOcorrencias(filtros: FiltrosOcorrencia = {}): Promise<Ocor
 // GET /ocorrencias/{id}
 export function buscarOcorrencia(id: number): Promise<Ocorrencia> {
   return request<Ocorrencia>(`/ocorrencias/${id}`)
+}
+
+// GET /ocorrencias/{id}/atualizacoes -> histórico de status
+export function listarAtualizacoes(idOcorrencia: number): Promise<Atualizacao[]> {
+  return request<Atualizacao[]>(`/ocorrencias/${idOcorrencia}/atualizacoes`)
+}
+
+// GET /ocorrencias/{id}/fotos -> lista sem os bytes (cada item tem a url da imagem)
+export function listarFotos(idOcorrencia: number): Promise<Foto[]> {
+  return request<Foto[]>(`/ocorrencias/${idOcorrencia}/fotos`)
+}
+
+// Endereço completo da imagem para usar no <img src>: VITE_API_URL + "/fotos/3"
+export function urlFoto(foto: Foto): string {
+  return `${API_URL}${foto.url}`
 }
 
 // ---------- Categorias e bairros (para filtros e formulários) ----------

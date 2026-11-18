@@ -2,6 +2,8 @@ import type { ReactNode } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
 import { Carregando } from '../components/Carregando'
+import { GaleriaFotos } from '../components/GaleriaFotos'
+import { HistoricoAtualizacoes } from '../components/HistoricoAtualizacoes'
 import { MensagemErro } from '../components/MensagemErro'
 import { PrevisaoIa } from '../components/PrevisaoIa'
 import { PrioridadeBadge } from '../components/PrioridadeBadge'
@@ -63,6 +65,16 @@ export function OcorrenciaDetalhePage() {
                 <Info rotulo="Órgão responsável">{ocorrencia.categoria.orgao}</Info>
                 <Info rotulo="Prazo de referência">{plural(ocorrencia.categoria.prazoDias, 'dia', 'dias')}</Info>
               </dl>
+
+              <section aria-labelledby="titulo-fotos">
+                <h2 id="titulo-fotos" className="mb-3 text-xl font-semibold">Fotos</h2>
+                <GaleriaFotos idOcorrencia={ocorrencia.id} categoria={ocorrencia.categoria.nome} />
+              </section>
+
+              <section aria-labelledby="titulo-historico">
+                <h2 id="titulo-historico" className="mb-3 text-xl font-semibold">Histórico</h2>
+                <HistoricoAtualizacoes idOcorrencia={ocorrencia.id} />
+              </section>
             </article>
 
             <aside className="space-y-6">
