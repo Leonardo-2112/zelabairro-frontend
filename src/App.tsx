@@ -11,6 +11,7 @@ import { NotFoundPage } from './pages/NotFoundPage'
 import { NovaOcorrenciaPage } from './pages/NovaOcorrenciaPage'
 import { OcorrenciaDetalhePage } from './pages/OcorrenciaDetalhePage'
 import { OcorrenciasPage } from './pages/OcorrenciasPage'
+import { PainelPage } from './pages/PainelPage'
 import { SobrePage } from './pages/SobrePage'
 
 // Mapa de rotas: todas as páginas ficam dentro do layout (Header + Footer)
@@ -31,6 +32,11 @@ function App() {
         {/* Só cidadão logado registra ocorrência */}
         <Route element={<RotaProtegida perfil="CIDADAO" />}>
           <Route path="ocorrencias/nova" element={<NovaOcorrenciaPage />} />
+        </Route>
+
+        {/* Painel: só gestor (a API confere de novo pelo X-Gestor-Id) */}
+        <Route element={<RotaProtegida perfil="GESTOR" />}>
+          <Route path="painel" element={<PainelPage />} />
         </Route>
 
         <Route path="*" element={<NotFoundPage />} />
