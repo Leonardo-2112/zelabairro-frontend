@@ -1,4 +1,5 @@
 import type { CampoErro, ErroApi } from '../types/erroApi'
+import type { FiltrosOcorrencia, Ocorrencia } from '../types/ocorrencia'
 import type { Cidadao, DadosLogin, NovoCidadao, Sessao } from '../types/usuario'
 
 // Endereço da API Java, lido do arquivo .env (VITE_API_URL). Nunca fixo no código.
@@ -90,4 +91,16 @@ export function login(dados: DadosLogin): Promise<Sessao> {
 // POST /cidadaos -> cadastro público (sempre cria cidadão, RN17)
 export function cadastrarCidadao(dados: NovoCidadao): Promise<Cidadao> {
   return request<Cidadao>('/cidadaos', { metodo: 'POST', corpo: dados })
+}
+
+// ---------- Ocorrências ----------
+
+// GET /ocorrencias?status=&idBairro=&idCategoria= -> já vem ordenada por prioridade
+export function listarOcorrencias(filtros: FiltrosOcorrencia = {}): Promise<Ocorrencia[]> {
+  const parametros = new URLSearchParams()
+  if (filtros.status) parametros.set('status', filtros.status)
+  if (filtros.idBairro) parametros.set('idBairro', String(filtros.idBairro))
+  if (filtros.idCategoria) parametros.set('idCategoria', String(filtros.idCategoria))
+  const consulta = parametros.toString()
+  return request<Ocorrencia[]>(`/ocorrencias${consulta ? `?${consulta}` : ''}`)
 }
