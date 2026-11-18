@@ -1,5 +1,6 @@
 import type { Bairro, Categoria } from '../types/catalogo'
 import type { CampoErro, ErroApi } from '../types/erroApi'
+import type { ResumoBairro } from '../types/painel'
 import type {
   Apoio,
   Atualizacao,
@@ -174,4 +175,11 @@ export function listarCategorias(): Promise<Categoria[]> {
 // GET /bairros
 export function listarBairros(): Promise<Bairro[]> {
   return request<Bairro[]>('/bairros')
+}
+
+// ---------- Painel do gestor ----------
+
+// GET /painel/bairros -> abertas, atrasadas e resolvidas por bairro (só gestor)
+export function resumoPorBairro(idGestor: number): Promise<ResumoBairro[]> {
+  return request<ResumoBairro[]>('/painel/bairros', { cabecalhos: { 'X-Gestor-Id': String(idGestor) } })
 }
