@@ -1,8 +1,15 @@
-// Primeira versão: só confirma que React, TypeScript e Tailwind estão funcionando
+// Vitrine do tema: confere as cores, fontes e classes reutilizáveis do index.css
 function App() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-slate-50 p-6">
-      <h1 className="text-3xl font-bold text-teal-700">ZelaBairro</h1>
+    <main className="container-pagina py-12">
+      <h1 className="titulo-pagina">ZelaBairro</h1>
+      <p className="mt-2 text-slate-600">Tema visual carregado.</p>
+      <div className="card mt-6 flex flex-wrap gap-3">
+        <button type="button" className="btn-primario">Primário</button>
+        <button type="button" className="btn-secundario">Secundário</button>
+        <button type="button" className="btn-destaque">Destaque</button>
+        <span className="badge bg-marca-100 text-marca-800">Badge</span>
+      </div>
     </main>
   )
 }
