@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
+import { RotaProtegida } from './components/RotaProtegida'
 import { MainLayout } from './layouts/MainLayout'
 import { CadastroPage } from './pages/CadastroPage'
 import { ContatoPage } from './pages/ContatoPage'
@@ -7,6 +8,7 @@ import { HomePage } from './pages/HomePage'
 import { IntegrantesPage } from './pages/IntegrantesPage'
 import { LoginPage } from './pages/LoginPage'
 import { NotFoundPage } from './pages/NotFoundPage'
+import { NovaOcorrenciaPage } from './pages/NovaOcorrenciaPage'
 import { OcorrenciaDetalhePage } from './pages/OcorrenciaDetalhePage'
 import { OcorrenciasPage } from './pages/OcorrenciasPage'
 import { SobrePage } from './pages/SobrePage'
@@ -25,6 +27,12 @@ function App() {
         <Route path="contato" element={<ContatoPage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="cadastro" element={<CadastroPage />} />
+
+        {/* Só cidadão logado registra ocorrência */}
+        <Route element={<RotaProtegida perfil="CIDADAO" />}>
+          <Route path="ocorrencias/nova" element={<NovaOcorrenciaPage />} />
+        </Route>
+
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

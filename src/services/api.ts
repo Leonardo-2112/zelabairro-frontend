@@ -1,6 +1,6 @@
 import type { Bairro, Categoria } from '../types/catalogo'
 import type { CampoErro, ErroApi } from '../types/erroApi'
-import type { Apoio, Atualizacao, FiltrosOcorrencia, Foto, Ocorrencia } from '../types/ocorrencia'
+import type { Apoio, Atualizacao, FiltrosOcorrencia, Foto, NovaOcorrencia, Ocorrencia } from '../types/ocorrencia'
 import type { Cidadao, DadosLogin, NovoCidadao, Sessao } from '../types/usuario'
 
 // Endereço da API Java, lido do arquivo .env (VITE_API_URL). Nunca fixo no código.
@@ -109,6 +109,11 @@ export function listarOcorrencias(filtros: FiltrosOcorrencia = {}): Promise<Ocor
 // GET /ocorrencias/{id}
 export function buscarOcorrencia(id: number): Promise<Ocorrencia> {
   return request<Ocorrencia>(`/ocorrencias/${id}`)
+}
+
+// POST /ocorrencias -> a Java valida (RN03), consulta a IA e devolve a ocorrência criada
+export function criarOcorrencia(dados: NovaOcorrencia): Promise<Ocorrencia> {
+  return request<Ocorrencia>('/ocorrencias', { metodo: 'POST', corpo: dados })
 }
 
 // GET /ocorrencias/{id}/atualizacoes -> histórico de status
