@@ -1,4 +1,5 @@
 import type { CampoErro, ErroApi } from '../types/erroApi'
+import type { Cidadao, DadosLogin, NovoCidadao, Sessao } from '../types/usuario'
 
 // Endereço da API Java, lido do arquivo .env (VITE_API_URL). Nunca fixo no código.
 export const API_URL: string = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '')
@@ -77,4 +78,16 @@ export async function request<T>(caminho: string, opcoes: OpcoesRequisicao = {})
     return undefined as T
   }
   return (await resposta.json()) as T
+}
+
+// ---------- Login e cadastro (Documento Base 8.5) ----------
+
+// POST /auth/login -> {id, nome, perfil}
+export function login(dados: DadosLogin): Promise<Sessao> {
+  return request<Sessao>('/auth/login', { metodo: 'POST', corpo: dados })
+}
+
+// POST /cidadaos -> cadastro público (sempre cria cidadão, RN17)
+export function cadastrarCidadao(dados: NovoCidadao): Promise<Cidadao> {
+  return request<Cidadao>('/cidadaos', { metodo: 'POST', corpo: dados })
 }
