@@ -1,3 +1,4 @@
+import type { Bairro, Categoria } from '../types/catalogo'
 import type { CampoErro, ErroApi } from '../types/erroApi'
 import type { FiltrosOcorrencia, Ocorrencia } from '../types/ocorrencia'
 import type { Cidadao, DadosLogin, NovoCidadao, Sessao } from '../types/usuario'
@@ -103,4 +104,16 @@ export function listarOcorrencias(filtros: FiltrosOcorrencia = {}): Promise<Ocor
   if (filtros.idCategoria) parametros.set('idCategoria', String(filtros.idCategoria))
   const consulta = parametros.toString()
   return request<Ocorrencia[]>(`/ocorrencias${consulta ? `?${consulta}` : ''}`)
+}
+
+// ---------- Categorias e bairros (para filtros e formulários) ----------
+
+// GET /categorias
+export function listarCategorias(): Promise<Categoria[]> {
+  return request<Categoria[]>('/categorias')
+}
+
+// GET /bairros
+export function listarBairros(): Promise<Bairro[]> {
+  return request<Bairro[]>('/bairros')
 }
