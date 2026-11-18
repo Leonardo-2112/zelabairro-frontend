@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
+import { BotaoApoiar } from '../components/BotaoApoiar'
 import { Carregando } from '../components/Carregando'
 import { GaleriaFotos } from '../components/GaleriaFotos'
 import { HistoricoAtualizacoes } from '../components/HistoricoAtualizacoes'
@@ -25,7 +26,7 @@ function Info({ rotulo, children }: { rotulo: string; children: ReactNode }) {
 export function OcorrenciaDetalhePage() {
   const { id } = useParams()
   const idOcorrencia = Number(id)
-  const { dados: ocorrencia, carregando, erro, recarregar } = useOcorrencia(idOcorrencia)
+  const { dados: ocorrencia, carregando, erro, recarregar, setDados } = useOcorrencia(idOcorrencia)
 
   return (
     <div className="container-pagina py-8">
@@ -82,10 +83,15 @@ export function OcorrenciaDetalhePage() {
                 <h2 id="titulo-previsao" className="text-lg font-semibold">Previsão da IA</h2>
                 <PrevisaoIa prazoPrevistoDias={ocorrencia.prazoPrevistoDias} riscoAtraso={ocorrencia.riscoAtraso} />
               </section>
-              <section className="card" aria-labelledby="titulo-apoios">
+              <section className="card space-y-4" aria-labelledby="titulo-apoios">
                 <h2 id="titulo-apoios" className="text-lg font-semibold">Apoios</h2>
-                <p className="mt-2 font-display text-4xl font-bold text-marca-700">{ocorrencia.qtdApoios}</p>
-                <p className="text-slate-600">moradores relatam o mesmo problema.</p>
+                <p>
+                  <span className="font-display text-4xl font-bold text-marca-700">{ocorrencia.qtdApoios}</span>{' '}
+                  <span className="text-slate-600">
+                    {ocorrencia.qtdApoios === 1 ? 'morador relata' : 'moradores relatam'} o mesmo problema.
+                  </span>
+                </p>
+                <BotaoApoiar ocorrencia={ocorrencia} onApoiado={setDados} />
               </section>
             </aside>
           </div>
