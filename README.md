@@ -16,7 +16,7 @@ Este repositório é a **SPA em React** que consome a **API REST em Java** do pr
 | Repositório (GitHub) | https://github.com/Leonardo-2112/zelabairro-frontend |
 | Aplicação publicada (Vercel) | https://zelabairro-frontend.vercel.app |
 | API Java (Render) | https://zelabairro-api-08ut.onrender.com |
-| Vídeo no YouTube (até 3 min) | `[colar o link do vídeo]` |
+| Vídeo no YouTube (até 3 min) | https://youtu.be/IfAloPZ-dAE |
 
 > A API usa o plano gratuito do Render, que “dorme” sem uso: o **primeiro acesso pode levar até 1 minuto**. A tela mostra um aviso enquanto isso.
 
